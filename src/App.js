@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addCustomerAction, removeCustomerAction} from "./store/customerReducer";
+import {fetchCustomers} from "./aysncActions/customers";
 
 function App() {
 
@@ -25,9 +25,10 @@ function App() {
         dispatch(addCustomerAction(customer))
     }
 
-    const removeCustomer = (customer) => {
+    const removeCustomers = (customer) => {
         dispatch(removeCustomerAction(customer.id))
     }
+
 
     return (
         <div className="App">
@@ -36,6 +37,7 @@ function App() {
                 <button onClick={() => addCash(Number(prompt()))}>add</button>
                 <button onClick={() => getCash(Number(prompt()))}>get</button>
                 <button onClick={() => addCustomer(prompt())}>Add customer</button>
+                <button onClick={() => dispatch(fetchCustomers())}>add many customers</button>
             </div>
             <div>
                 {customers.length > 0 ?
@@ -43,14 +45,18 @@ function App() {
                         {customers.map(customer => (
                             <div
                                 key={customer.id}
-                                onClick={() => removeCustomer(customer)}
+                                onClick={() => removeCustomers(customer)}
                             >
                                 {customer.name}
-                             </div>
+                            </div>
                         ))}
                     </>
                     :
-                    <div>no customers</div>}
+                    <div>
+                        no customers
+                    </div>
+
+                }
             </div>
         </div>
     );
